@@ -26,7 +26,7 @@ if not os.path.exists(csv_file):
 def detect_arduino_port():
     ports = list(serial.tools.list_ports.comports())
     for port in ports:
-        if "COM20" in port.device or "wchusbmodem" in port.device:
+        if "COM" in port.device or "wchusbmodem" in port.device:
             return port.device
     return None
 
