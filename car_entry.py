@@ -7,6 +7,7 @@ import serial
 import serial.tools.list_ports
 import csv
 from collections import Counter
+pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
 # Load YOLOv8 model
 model = YOLO('best.pt')
@@ -26,7 +27,7 @@ if not os.path.exists(csv_file):
 def detect_arduino_port():
     ports = list(serial.tools.list_ports.comports())
     for port in ports:
-        if "COM" in port.device or "wchusbmodem" in port.device:
+        if "COM21" in port.device or "wchusbmodem" in port.device:
             return port.device
     return None
 
@@ -45,7 +46,8 @@ def mock_ultrasonic_distance():
     return random.choice([random.randint(10, 40)] + [random.randint(60, 150)] * 10)
 
 # Initialize webcam
-cap = cv2.VideoCapture(1)
+# cap = cv2.VideoCapture(1)
+cap = cv2.VideoCapture(1, cv2.CAP_DSHOW)
 plate_buffer = []
 entry_cooldown = 300  # 5 minutes
 last_saved_plate = None
